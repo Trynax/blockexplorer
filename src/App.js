@@ -53,10 +53,19 @@ function App() {
     <ul>
 
       {
-        blockDetailsAvailable && blockDetails.transactions.map((tx,i)=>{
-          return <li key={i}>
-            {tx}
-          </li>
+        blockDetailsAvailable && blockDetails.transactions.map(async(tx,i)=>{
+          const txDetails = await alchemy.core.getTransactionReceipt(tx)
+          return <div key={i}>
+          <h1>
+            Transaction
+          </h1>
+            <li >Transaction: {tx}</li>
+            <li >Transaction Index: {txDetails.transactionIndex}</li>
+            <li >From:{txDetails.from}</li>
+            <li >to:{txDetails.to} </li>
+            <hr/>
+  
+          </div>
         })
       }
 

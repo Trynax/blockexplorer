@@ -22,6 +22,7 @@ const alchemy = new Alchemy(settings);
 function App() {
   const [blockNumber, setBlockNumber] = useState();
   const [blockDetails , setBlockNumberDetails] = useState();
+  const [blockDetailsAvailable, setBlockNumberDetailsAvailable] = useState();
 
 
 
@@ -41,11 +42,25 @@ function App() {
 
     <button onClick={ async ()=>{
       setBlockNumberDetails(await alchemy.core.getBlock())
+     if(blockDetails){
+       setBlockNumberDetailsAvailable(true)
+     }
 
-      console.log(blockDetails)
     }}>
       Get Block Details
     </button>
+
+    <ul>
+
+      {
+        blockDetailsAvailable && blockDetails.transactions.map((tx,i)=>{
+          return <li key={i}>
+            {tx}
+          </li>
+        })
+      }
+
+    </ul>
   </div>
   </> 
   
